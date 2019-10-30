@@ -7,9 +7,10 @@ from django.contrib.auth.models import User
 class Blog(models.Model):
     title = models.CharField(max_length=225)
     url = models.URLField()
-    created_at = models.DateField(auto_now_add=True)
+    created_date = models.DateField(auto_now_add=True)
     like_total = models.IntegerField()
     body = models.TextField()
+    author=models.ForeignKey(User,on_delete=models.CASCADE)
 
     def __str__(self):
         return self.title
@@ -19,10 +20,10 @@ class Blog(models.Model):
 
 
 class Comment(models.Model):
-    article = models.ForeignKey(
-        Article, on_delete=models.CASCADE, verbose_name="Makale", related_name="comments")
-    comment_author = models.CharField(max_length=50, verbose_name="İsim")
-    comment_content = models.CharField(max_length=200, verbose_name="Yorum")
+    blog= models.ForeignKey(
+        Blog, on_delete=models.CASCADE, )
+    comment_author = models.CharField(max_length=50)
+    comment_content = models.CharField(max_length=200)
     comment_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
