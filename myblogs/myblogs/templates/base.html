@@ -19,10 +19,11 @@
 
 
     <style>
-            .justify-content-between{
-                margin-left: 15px;
-                margin-right:20px;
-            }
+        .justify-content-between {
+            margin-left: 15px;
+            margin-right: 20px;
+        }
+
         .navanch {
             color: white;
             margin-right: 5px;
@@ -44,8 +45,19 @@
                     <strong>My Blog</strong>
                 </a>
                 <div>
+                    {% if user.is_authenticated %}
+                    <a class="nav-item nav-link"
+                        href="javascript:{document.getElementById('logout').submit()}">Logout</a>
+                    <form id="logout" method="POST" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <input type="hidden">
+
+                    </form>
+                    {% else%}
                     <a class="navanch" href="{% url 'signup' %}">Sign Up</a>
                     <a class="navanch" href="{% url 'login' %}">Login</a>
+                    {% endif %}
+
                 </div>
             </div>
         </div>
