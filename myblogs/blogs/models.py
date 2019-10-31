@@ -8,7 +8,8 @@ class Blog(models.Model):
     title = models.CharField(max_length=225,null=True,blank=True)
     body = models.TextField(null=True,blank=True)
     posted_on =  models.DateTimeField(null=True)
-    like_total = models.IntegerField(default=0,blank=True,null=True)
+    like_total = models.IntegerField(default=0)
+    views_total = models.IntegerField(default=0)
     author=models.ForeignKey(User,on_delete=models.CASCADE,null=True,blank=True)
 
     def __str__(self):

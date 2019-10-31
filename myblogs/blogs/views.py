@@ -6,10 +6,11 @@ from django.utils import timezone
 
 
 def home(request):
-    return render(request, 'blogs/home.html')
+    blogs=Blog.objects
+    return render(request, 'blogs/home.html',{'blogs':blogs})
 
 
-@login_required
+@login_required(login_url="/accounts/login")
 def create(request):
     if request.method == "POST":
         try:
@@ -36,3 +37,11 @@ def create(request):
 def blog_details(request,blog_id):
     blog=get_object_or_404(Blog,pk=blog_id)
     return render(request,"blogs/blog-page.html",{"blog":blog} )
+
+@login_required(login_url="/accounts/login")
+def like(request,blog_id):
+    if request.method=='POST':
+        blog=get_object_or_404(Blog,pk=blog_id)
+        blog.like_total+=1
+        blog.save()
+        return redirect("/blogs/" +str(blog.id))
