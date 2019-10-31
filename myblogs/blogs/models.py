@@ -6,17 +6,20 @@ from django.contrib.auth.models import User
 
 class Blog(models.Model):
     title = models.CharField(max_length=225)
-    url = models.URLField()
+    body = models.TextField()
     created_date = models.DateField(auto_now_add=True)
     like_total = models.IntegerField()
-    body = models.TextField()
     author=models.ForeignKey(User,on_delete=models.CASCADE)
 
     def __str__(self):
         return self.title
+    def summary():
+        return self.body[:100]
+    def created_date():
+        return self.created_date.strftime('%b %e %Y')
 
-    class Meta:
-        ordering = ['-created_date']
+    # class Meta:
+    #     ordering = ['-created_date']
 
 
 class Comment(models.Model):
@@ -29,5 +32,5 @@ class Comment(models.Model):
     def __str__(self):
         return self.comment_content
 
-    class Meta:
-        ordering = ['-comment_date']
+    # class Meta:
+    #     ordering = ['-comment_date']

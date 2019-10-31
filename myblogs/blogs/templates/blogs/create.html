@@ -2,7 +2,7 @@
 
 {% block content %}
 {% if error %}
-{{ error }}
+<p class="text-danger">{{ error }}</p>
 {% endif %}
 <h1 class="mt-3">Create</h1>
 <form class="mt-2" style="width:500px;" action="{% url 'create'%}" method="POST" enctype="multipart/form-data">
@@ -17,7 +17,7 @@
         <textarea name="body" id="body" class="form-control" cols="53" rows="5" placeholder="Content"></textarea>
     </div>
 
-    <button type="submit" class="btn btn-dark">Submit</button>
+    <button type="submit" class="btn btn-dark" value="Add blog">Submit</button>
 
 </form>
 
