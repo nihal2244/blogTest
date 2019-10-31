@@ -32,7 +32,7 @@ def create(request):
 
     else:
         return render(request, "blogs/create.html")
-@login_required
+
 def blog_details(request,blog_id):
     blog=get_object_or_404(Blog,pk=blog_id)
     return render(request,"blogs/blog-page.html",{"blog":blog} )

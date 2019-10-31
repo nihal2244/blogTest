@@ -23,10 +23,21 @@
                     {{blog.posted_on}}            
             </div>
             <div class="card card-body" style="text-align: center;font-weight: bold;">
-                <i class="fa fa-heart btn button" aria-hidden="true" style="color: black;font-size: xx-large;"></i>Like: {{blog.like_total}}<i class="fa fa-eye" aria-hidden="true" style="font-size: xx-large;"></i>Views: {{blog.like_total}}
+                <i class="fa fa-heart btn button" action="{% url 'likes' product.id %}" aria-hidden="true" style="color: black;font-size: xx-large;"></i>Like: {{blog.like_total}}<i class="fa fa-eye" aria-hidden="true" style="font-size: xx-large;"></i>Views: {{blog.like_total}}
             </div>
             <!-- <div class="card card-body" style="text-align: center;font-weight: bold;">
                 <i class="fa fa-eye" aria-hidden="true" style="font-size: xx-large;"></i>Views: {{blog.like_total}}
+            </div> -->
+
+            <!--    <div class="card card-body" style="text-align: center;font-weight: bold;">
+                <form id="upvote" action="{% url 'likes' product.id %}" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden">
+                </form>
+                <a href="javascript:{document.getElementById('upvote').submit()}"><i class="fa fa-heart btn button"  aria-hidden="true"
+                    style="color: black;font-size: xx-large;"></i>Like: {{blog.like_total}}</a>
+                <i class="fa fa-eye"
+                    aria-hidden="true" style="font-size: xx-large;"></i>Views: {{blog.like_total}}
             </div> -->
         </div>
     </div>
