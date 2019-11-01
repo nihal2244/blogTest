@@ -4,15 +4,16 @@
     {% for blog in blogs.all %}
     <div class="row mt-5 mb-3">
     
-    <div class="col-6"><h3>{{blog.title}}</h3>{{blog.summary}}</div>
+    <div class="col-6" onclick="window.location='{% url 'blogpage' blog.id %}';"><h3>{{blog.title}}</h3>{{blog.summary}}</div>
     <div class="col-6">
             <a href="javascript:{document.getElementById('like{{blog.id}}').submit()}">
-                    <i class="fa fa-heart btn button" aria-hidden="true"
-                        style="color: black;font-size: xx-large;"></i>Like: {{blog.like_total}}</a>
+                    <i aria-hidden="true"
+                        ></i>Like: {{blog.like_total}}</a>
                         
-                <i class="fa fa-eye" aria-hidden="true" style="font-size: xx-large;"></i><br>Views: {{blog.like_total}}
+                <i aria-hidden="true"></i><br>Views: {{blog.like_total}}
+                <a href="{% url 'blogpage' blog.id %}">Comments: {{ blog.comments.count }}</a>
     </div>
-        
+
 </div>
 <form id="like{{blog.id}}" action="{% url 'like' blog.id %}" method="POST">
         {% csrf_token %}

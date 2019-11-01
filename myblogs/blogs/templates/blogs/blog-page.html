@@ -42,6 +42,16 @@
             </form>
 
         </div>
+        {% for comment in comments.all%}
+        <div class="comment" style="margin: 20px 0px 20px 20px;">
+            <div class="date">{{ comment.comment_date| date:"M d, Y"}}</div>
+            <strong>{{ comment.comment_author }}</strong>
+            <p>{{ comment.comment_content|linebreaks }}</p>
+            
+        </div>
+        {% empty %}
+        <p>No comments here yet :(</p>
+        {% endfor %}
     </div>
 </div>
 <style>
