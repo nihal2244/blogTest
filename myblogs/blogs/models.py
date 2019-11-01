@@ -47,6 +47,6 @@ class Likes(models.Model):
     like = models.BooleanField()
 
     def __str__(self):
-        return str(self.liked_author)
+        return str(self.blog)
     class Meta:
         ordering = ['-liked_date']

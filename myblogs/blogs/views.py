@@ -49,13 +49,13 @@ def like(request, blog_id):
     if request.method == 'POST':
         blog = get_object_or_404(Blog, pk=blog_id)
         liked_user=request.user
-        print(liked_user)
-        like_fil=Likes.objects.filter(pk=blog_id)
-        if like_fil:                                                             # if the particular post is there
-            if str(liked_user) not in str(like_fil):                                       # then we check the user which is us, in there
-                like_obj = Likes(liked_author=liked_user,like=True)    #if we there and we returned this data, this part for saving data, I mean if this data is already created than we dont have to delete and create again, we just change LikeModel.liked true or false state, so that if you create like and it will never delete, it just change liked or like state
-                like_obj.blog=blog
-                like_obj.save()                                                      # if data is created then we say 'new'
+        
+        like_fil=Likes.objects.filter(blog=blog,liked_author=liked_user)
+        print(str(like_fil))
+        if not like_fil:                                       # then we check the user which is, in there
+            like_obj = Likes(liked_author=liked_user,like=True)    #if we there and we returned this data, this part for saving data, I mean if this data is already created than we dont have to delete and create again, we just change LikeModel.liked true or false state, so that if you create like and it will never delete, it just change liked or like state
+            like_obj.blog=blog
+            like_obj.save()                                                      # if data is created then we say 'new'
     return redirect("/blogs/" + str(blog.id))
 
 
@@ -65,7 +65,7 @@ def addComment(request, blog_id):
 
     if request.method == "POST":
         comment_author = request.user
-        print("yolo", request.POST)
+        
         comment_content = request.POST["comments"]
 
         newComment = Comment(comment_author=comment_author,
