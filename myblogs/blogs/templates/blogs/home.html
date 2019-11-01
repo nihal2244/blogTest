@@ -1,5 +1,24 @@
 {% extends 'base.html' %}
 
 {% block content %}
-home
+    {% for blog in blogs.all %}
+    <div class="row mt-5 mb-3">
+    
+    <div class="col-6" onclick="window.location='{% url 'blogpage' blog.id %}';"><h3>{{blog.title}}</h3>{{blog.summary}}</div>
+    <div class="col-6">
+            <a href="javascript:{document.getElementById('like{{blog.id}}').submit()}">
+                    <i aria-hidden="true"
+                        ></i>Like: {{blog.like_total}}</a>
+                        
+                <i aria-hidden="true"></i><br>Views: {{blog.like_total}}
+                <a href="{% url 'blogpage' blog.id %}">Comments: {{ blog.comments.count }}</a>
+    </div>
+
+</div>
+<form id="like{{blog.id}}" action="{% url 'like' blog.id %}" method="POST">
+        {% csrf_token %}
+        <input type="hidden">
+    </form>
+
+    {%endfor%}
 {% endblock %}

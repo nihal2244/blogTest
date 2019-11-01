@@ -20,31 +20,47 @@
             <div class="card card-body" class="force-overflow">
                 <h6>Author :</h6>
                 <h4>{{blog.author|title}}</h4>
-                {{blog.posted_on}}
+                {{blog.posted_on|date:"M d, Y"}}
             </div>
-            <!-- <div class="card card-body" style="text-align: center;font-weight: bold;">
-                <i class="fa fa-heart btn button" action="{% url 'likes' product.id %}" aria-hidden="true"
-                    style="color: black;font-size: xx-large;"></i>Like: {{blog.like_total}}<i class="fa fa-eye"
-                    aria-hidden="true" style="font-size: xx-large;"></i>Views: {{blog.like_total}}
-            </div> -->
-            <!-- <div class="card card-body" style="text-align: center;font-weight: bold;">
+            <!--<div class="card card-body" style="text-align: center;font-weight: bold;">
+                <i class="fa fa-heart btn button"  aria-hidden="true" style="color: black;font-size: xx-large;"></i>Like: {{blog.like_total}}<i class="fa fa-eye" aria-hidden="true" style="font-size: xx-large;"></i>Views: {{blog.like_total}}
+            </div>
+             <div class="card card-body" style="text-align: center;font-weight: bold;">
                 <i class="fa fa-eye" aria-hidden="true" style="font-size: xx-large;"></i>Views: {{blog.like_total}}
             </div> -->
 
             <div class="card card-body" style="text-align: center;font-weight: bold;">
-                <form id="likes" action="{% url 'likes' product.id %}" method="POST">
-                    {% csrf_token %}
-                    <input type="hidden">
-                </form>
-                <a href="javascript:{document.getElementById('likes').submit()}"><button>Like: {{blog.like_total}}</button> </a>
+
+                <a href="javascript:{document.getElementById('like').submit()}">
+                    <i class="fa fa-heart btn button" aria-hidden="true"
+                        style="color: black;font-size: xx-large;"></i><br>Like: {{blog.like_total}}</a>
                 <i class="fa fa-eye" aria-hidden="true" style="font-size: xx-large;"></i>Views: {{blog.like_total}}
             </div>
+            <form id="like" action="{% url 'like' blog.id %}" method="POST">
+                {% csrf_token %}
+                <input type="hidden">
+            </form>
+
         </div>
+        {% for comment in comments.all%}
+        <div class="comment" style="margin: 20px 0px 20px 20px;">
+            <div class="date">{{ comment.comment_date| date:"M d, Y"}}</div>
+            <strong>{{ comment.comment_author }}</strong>
+            <p>{{ comment.comment_content|linebreaks }}</p>
+            
+        </div>
+        {% empty %}
+        <p>No comments here yet :(</p>
+        {% endfor %}
     </div>
 </div>
 <style>
     #style-7::-webkit-scrollbar-track {
+<<<<<<< HEAD
         -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+=======
+        box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+>>>>>>> efc5ca2255cd16855350934a929d72adf885ce44
         background-color: #F5F5F5;
         border-radius: 10px;
     }

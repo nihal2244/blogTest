@@ -8,8 +8,9 @@ class Blog(models.Model):
     title = models.CharField(max_length=225,null=True,blank=True)
     body = models.TextField(null=True,blank=True)
     posted_on =  models.DateTimeField(null=True)
-    like_total = models.IntegerField(default=0,blank=True,null=True)
-    author=models.ForeignKey(User,on_delete=models.CASCADE,null=True,blank=True)
+    like_total = models.IntegerField(default=0)
+    views_total = models.IntegerField(default=0)
+    author=models.ForeignKey(User,on_delete=models.CASCADE,null=True,)
 
     def __str__(self):
         return self.title
@@ -18,19 +19,19 @@ class Blog(models.Model):
     def created_date(self):
         return self.created_date.strftime("%b %e %Y")
 
-    # class Meta:
-    #     ordering = ['-created_date']
+    class Meta:
+        ordering = ['-posted_on']
 
 
-# class Comment(models.Model):
-#     blog= models.ForeignKey(
-#         Blog, on_delete=models.CASCADE, )
-#     comment_author = models.CharField(max_length=50)
-#     comment_content = models.CharField(max_length=200)
-#     comment_date = models.DateTimeField(auto_now_add=True)
+class Comment(models.Model):
+    blog= models.ForeignKey(
+        Blog, on_delete=models.CASCADE,related_name="comments")
+    comment_author = models.ForeignKey(User,on_delete=models.CASCADE,null=True,blank=True)
+    comment_content = models.CharField(max_length=200)
+    comment_date = models.DateTimeField(auto_now_add=True)
 
-#     def __str__(self):
-#         return self.comment_content
+    def __str__(self):
+        return self.comment_content
 
-    # class Meta:
-    #     ordering = ['-comment_date']
+    class Meta:
+        ordering = ['-comment_date']
