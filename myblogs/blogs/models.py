@@ -5,17 +5,19 @@ from django.contrib.auth.models import User
 
 
 class Blog(models.Model):
-    title = models.CharField(max_length=225,null=True,blank=True)
-    body = models.TextField(null=True,blank=True)
-    posted_on =  models.DateTimeField(null=True)
-    like_total = models.IntegerField(default=0)
+    title = models.CharField(max_length=225, null=True, blank=True)
+    body = models.TextField(null=True, blank=True)
+    posted_on = models.DateTimeField(null=True)
+    
     views_total = models.IntegerField(default=0)
-    author=models.ForeignKey(User,on_delete=models.CASCADE,null=True,)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, null=True,)
 
     def __str__(self):
         return self.title
+
     def summary(self):
         return self.body[:100]
+
     def created_date(self):
         return self.created_date.strftime("%b %e %Y")
 
@@ -24,9 +26,10 @@ class Blog(models.Model):
 
 
 class Comment(models.Model):
-    blog= models.ForeignKey(
-        Blog, on_delete=models.CASCADE,related_name="comments")
-    comment_author = models.ForeignKey(User,on_delete=models.CASCADE,null=True,blank=True)
+    blog = models.ForeignKey(
+        Blog, on_delete=models.CASCADE, related_name="comments")
+    comment_author = models.ForeignKey(
+        User, on_delete=models.CASCADE, null=True, blank=True)
     comment_content = models.CharField(max_length=200)
     comment_date = models.DateTimeField(auto_now_add=True)
 
@@ -35,3 +38,15 @@ class Comment(models.Model):
 
     class Meta:
         ordering = ['-comment_date']
+
+
+class Likes(models.Model):
+    blog = models.ForeignKey(Blog, on_delete=models.CASCADE, related_name="likes")
+    liked_author = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True,related_name='likedauthor')
+    liked_date = models.DateTimeField(auto_now_add=True)
+    like = models.BooleanField()
+
+    def __str__(self):
+        return str(self.liked_author)
+    class Meta:
+        ordering = ['-liked_date']

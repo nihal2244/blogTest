@@ -1,24 +1,34 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    {% for blog in blogs.all %}
-    <div class="row mt-5 mb-3">
-    
-    <div class="col-6" onclick="window.location='{% url 'blogpage' blog.id %}';"><h3>{{blog.title}}</h3>{{blog.summary}}</div>
-    <div class="col-6">
-            <a href="javascript:{document.getElementById('like{{blog.id}}').submit()}">
-                    <i aria-hidden="true"
-                        ></i>Like: {{blog.like_total}}</a>
-                        
-                <i aria-hidden="true"></i><br>Views: {{blog.like_total}}
-                <a href="{% url 'blogpage' blog.id %}">Comments: {{ blog.comments.count }}</a>
+<!--loop through blogs from Blog object  -->
+{% for blog in blogs.all %}
+<!-- card for blogs title,body,views and likes -->
+<div class="row mt-5 mb-3">
+    <div class="col-6 card card-body" onclick="window.location='{% url 'blogpage' blog.id %}';"
+        style="box-shadow: -2px 3px 20px 5px rgba(0, 0, 0, 0.25);">
+        <h3>{{blog.title}}</h3>{{blog.summary}}
+    </div>
+    <div class="col-2 card card-body" style="box-shadow: -2px 3px 20px 5px rgba(0, 0, 0, 0.25);">
+        <a href="javascript:{document.getElementById('like{{blog.id}}').submit()}">
+            <i class="fa fa-thumbs-up" aria-hidden="true"></i>Like: {{blog.likes.count}}</a><br>
+
+        <p><i class="fa fa-eye" aria-hidden="true"></i>Views: {{blog.views_total}}</p>
+        <a href="{% url 'blogpage' blog.id %}"><i class="fa fa-comments-o" aria-hidden="true"></i>Comments:
+            {{ blog.comments.count }}</a>
+
     </div>
 
-</div>
-<form id="like{{blog.id}}" action="{% url 'like' blog.id %}" method="POST">
-        {% csrf_token %}
-        <input type="hidden">
-    </form>
 
-    {%endfor%}
+</div>
+<!-- forms for api call -->
+<form id="like{{blog.id}}" action="{% url 'like' blog.id %}" method="POST">
+    {% csrf_token %}
+    <input type="hidden">
+</form>
+
+{% endfor %}
+
+
+
 {% endblock %}
